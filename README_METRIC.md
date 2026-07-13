@@ -54,7 +54,6 @@ All live in `scripts/single_checkpoint_scripts/`
 | 3 | `3_landscape_2d_pca_topk_components.py` | Loss landscape along top-K PCA directions of the trajectory | Landscape |
 | 4 | `4_expected_sharpness.py` | Expected sharpness (and variance) from a 1D landscape `.npy` | Landscape |
 | 5 | `5_ranks.py` | Rank / spectral metrics (stable rank, effective rank) on weight matrices | Spectra |
-| 5b | `5b_ranks_init_to_final.py` | Singular spectrum of `ΔW = W_final − W_warmstart`, grouped by projection (ReLoRA-style) | Spectra |
 | 5 | `5_ranks_updates.py` | Update magnitude + update rank between consecutive checkpoints | Spectra |
 | 6 | `6_activations_comparison.py` | Activation L2 / cosine vs. the full-rank baseline | Activations |
 | 7 | `7_1d_interpolation.py` | Loss interpolation / barrier between consecutive checkpoints | Interpolation |
@@ -67,10 +66,9 @@ Overlay/trend plotters for each metric live under
 
 ## Quick start
 
-Install analysis dependencies and activate the environment:
+Activate the environment:
 
 ```bash
-pip install -r loss-landscape/requirements.txt
 conda activate <VIRTUAL-ENV-NAME>
 ```
 

@@ -5,6 +5,12 @@ This repository accompanies our paper **"Beyond Perplexity: A Geometric and Spec
 
 We study the optimization landscape of low-rank pre-training methods for LLMs — including GaLore, LoRA, CoLA, SLTrain, FiRA, and ReLoRA — and compare them against full-rank training through geometric and spectral diagnostics.
 
+The repository is organized into three stages, each with its own README:
+
+- **Training** (`training/`) — unified launcher for all low-rank pre-training methods (documented below).
+- **Analysis** (`loss-landscape/`) — geometric & spectral metrics on the resulting checkpoints. See [`README_METRIC.md`](README_METRIC.md).
+- **Evaluation** (`evaluation/`) — config-driven downstream evaluation via lm-evaluation-harness. See [`README_EVAL.md`](README_EVAL.md).
+
 
 # Unified Training Integration
 This folder now contains a single launcher that wraps all low-rank pre-training methods while keeping method code in their own repos.

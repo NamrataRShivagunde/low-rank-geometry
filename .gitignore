@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project artifacts (training checkpoints, analysis outputs, eval results)
+checkpoints/
+CHECKPOINTS/
+results/
+output/
+evaluation/output/
+*.npy
