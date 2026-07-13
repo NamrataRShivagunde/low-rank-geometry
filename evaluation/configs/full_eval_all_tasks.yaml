@@ -1,0 +1,41 @@
+evaluation:
+  model: hf
+  output_root: evaluation/output
+  device: cuda:0
+  batch_size: auto
+  num_fewshot: 0
+  bootstrap_iters: 1000
+  limit: null
+  seeds: [42]
+  tokenizer: t5-base
+
+  # All tasks for comprehensive evaluation
+  tasks:
+    # Base capability tasks
+    - piqa
+    - copa
+    - mrpc
+    - rte
+    - mnli
+    - arc_easy
+    - blimp
+    - sst2
+    - qqp
+    - qnli
+    - boolq
+    - multirc
+    - cola
+    - wsc
+    # Instruction following
+    - ifeval
+    - leaderboard_instruction_following
+    # Alignment / safety / truthfulness
+    - truthfulqa_mc1
+    - truthfulqa_mc2
+    - toxigen
+    - gsm8k
+
+  checkpoint_paths: []
+
+  model_args_extra:
+    trust_remote_code: true

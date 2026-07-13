@@ -1,0 +1,8 @@
+# Evaluation-specific requirements
+# Install with: pip install -r evaluation/requirements.txt
+
+lm-eval>=0.4.5
+pyyaml>=6.0
+protobuf
+langdetect
+immutabledict
