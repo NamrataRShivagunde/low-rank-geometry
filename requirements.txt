@@ -3,7 +3,7 @@
 
 # Core ML stack
 torch>=2.1.0
-transformers>=4.35.0
+transformers>=4.35.0 #  4.52.4 if it fails for cola 
 datasets>=2.12.0
 huggingface-hub>=0.15.0
 accelerate>=0.20.0
