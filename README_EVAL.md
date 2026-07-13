@@ -7,7 +7,7 @@ This directory contains config-driven downstream evaluation for checkpoints usin
 
 - Evaluate one checkpoint, many checkpoints, or whole checkpoint directories (`model_*`).
 - Tasks are defined in YAML config.
-- Multi-seed evaluation (default 5 seeds).
+- Multi-seed evaluation (seed list set in config; shipped config uses 5 seeds).
 - Optional bootstrap uncertainty via `bootstrap_iters` (useful when you have one model per method).
 - Outputs include:
   - raw lm-eval JSON per checkpoint per seed
@@ -23,9 +23,9 @@ pip install -r evaluation/requirements.txt
 
 ## Config
 
-Default config: `evaluation/configs/default_eval.yaml`
+Default config: `evaluation/configs/full_eval_all_tasks.yaml`
 
-Tasks currently configured. to evaluate on the tasks in the paper.
+Tasks currently configured to evaluate on the tasks in the paper.
 
 Default seeds:
 - 42, 43, 44, 45, 46
@@ -37,30 +37,31 @@ Bootstrap uncertainty:
 ## Dry run (no evaluation)
 
 ```bash
-./scripts/run_evaluation.sh --config evaluation/configs/default_eval.yaml --dry-run
+python evaluation/run_lm_eval.py --config evaluation/configs/full_eval_all_tasks.yaml --dry-run
 
 # Optional: override tokenizer from CLI
-./scripts/run_evaluation.sh --config evaluation/configs/default_eval.yaml --tokenizer t5-base --dry-run
+python evaluation/run_lm_eval.py --config evaluation/configs/full_eval_all_tasks.yaml --tokenizer t5-base --dry-run
 ```
 
 ## Run with config-defined checkpoints
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_evaluation.sh --config evaluation/configs/default_eval.yaml
-
-# Example: one-seed + bootstrap uncertainty
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_evaluation.sh \
-  --config evaluation/configs/quick_eval_model10000_3tasks_1seed.yaml
+CUDA_VISIBLE_DEVICES=0 python evaluation/run_lm_eval.py --config evaluation/configs/full_eval_all_tasks.yaml
 ```
+
+For multi-GPU runs over the final checkpoints of each method, use the launchers
+`evaluation/eval_60m.sh`, `evaluation/eval_130m.sh`, `evaluation/eval_350m.sh`.
 
 ## Run with explicit checkpoints/directories
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_evaluation.sh \
-  --config evaluation/configs/default_eval.yaml \
+CUDA_VISIBLE_DEVICES=0 python evaluation/run_lm_eval.py \
+  --config evaluation/configs/full_eval_all_tasks.yaml \
   --checkpoints-dir /path/to/CHECKPOINTS/loss-landscape-checkpoints/llama_60m-2025-12-08-21-00-08 \
   --checkpoints-dir /path/to/CHECKPOINTS/loss-landscape-checkpoints/cola_60m-2025-12-08-20-59-46
 ```
+
+A single checkpoint can be passed with `--checkpoint` (repeatable) instead of `--checkpoints-dir`.
 
 ## Output structure
 

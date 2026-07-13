@@ -18,9 +18,7 @@ This folder now contains a single launcher that wraps all low-rank pre-training 
   - Full rank baseline: `fullrank`
   - Low-rank: `cola`, `galore`, `relora`, `fira`, `sltrain`
 - Standard checkpoint naming and location:
-  - Root directory: `CHECKPOINTS/`
-  - Run directory format: `method_modelsize-timestamp`
-  - Example: `cola_60m-2026-02-27-12-00-00`
+  - Root directory: `checkpoints/`
 
 ## 1) Clone method repositories
 
@@ -49,84 +47,11 @@ pip install --no-build-isolation .
 
 ## 2) Run training from one common entrypoint
 
-### 1-step smoke test (60M)
+All the bash scripts are given in `training/training_bash_scripts`.
 
-Full-rank baseline:
+For every run, the launcher writes checkpoints into a unique directory under the `save_dir` path.
 
-```bash
-python training/main.py --method fullrank --model-size 60m --smoke-test --monitor-memory
-```
-
-CoLA:
-
-```bash
-python training/main.py --method cola --model-size 60m --smoke-test --monitor-memory
-```
-
-GaLore:
-
-```bash
-python training/main.py --method galore --model-size 60m --smoke-test --monitor-memory
-```
-
-ReLoRA:
-
-```bash
-python training/main.py --method relora --model-size 60m --smoke-test --monitor-memory
-```
-
-SwitchLoRA (requires preprocessed dataset path):
-
-```bash
-python training/main.py --method switchlora --model-size 60m --dataset-path /path/to/preprocessed_c4 --smoke-test --monitor-memory
-```
-
-Fira:
-
-```bash
-python training/main.py --method fira --model-size 60m --smoke-test --monitor-memory
-```
-
-SLTrain:
-
-```bash
-python training/main.py --method sltrain --model-size 60m --smoke-test --monitor-memory
-```
-
-### Regular run (example)
-
-```bash
-python training/main.py \
-  --method galore \
-  --model-size 60m \
-  --steps 10000 \
-  --warmup-steps 1000 \
-  --batch-size 128 \
-  --total-batch-size 512 \
-  --nproc-per-node 1 \
-  --cuda-visible-devices 0 \
-  --monitor-memory
-```
-
-## Outputs
-
-For every run, launcher writes into a unique directory under `CHECKPOINTS/`:
-
-- Model checkpoints from underlying method script
-- `training_summary.json` containing:
-  - method/model size
-  - exact command
-  - elapsed time
-  - approximate throughput (`approx_steps_per_second`)
-  - sampled peak GPU memory (`peak_memory_mb`, when enabled)
-  - exit code
-
-## Notes
-
-- Additional method-specific flags can be appended with repeated `--extra-arg`.
-- Use `--dry-run` to print the final command without launching training.
-- configs - in sltrain original configs, the models were trained on 10% extra steps
-
+Note: the code supports training with an offline-mode dataset. For this, download and save the dataset at a path and point the training to it.
 
 ## Citation
 ```bibtex

@@ -28,9 +28,8 @@ loss-landscape/
 ├── configs/
 │   └── metrics.yaml               # default grid/params for landscape metrics
 └── scripts/
-    ├── single_checkpoint_scripts/ # one metric, one checkpoint  (numbered 1..11)
+    ├── single_checkpoint_scripts/ # one metric, one checkpoint  (numbered 1..9)
     ├── multi_checkpoint_scripts/  # same metric swept across training steps / per model size
-    ├── bash_scripts/              # ready-to-run launchers (canonical invocations + flags)
     └── supporting_scripts/        # helpers, e.g. list_checkpoints.py
 ```
 
@@ -38,9 +37,8 @@ loss-landscape/
   and computes one metric for one checkpoint. **This is what you copy when adding a new metric.**
 - **`multi_checkpoint_scripts/`** — thin wrappers that run a single-checkpoint metric across the
   full step trajectory, split per model size (`*_60m.py`, `*_130m.py`, `*_350m.py`), plus
-  `*_overlay.py` plotters that combine methods onto one figure and `*_trend` CSV emitters.
-- **`bash_scripts/`** — the real, tested command lines (paths, flags, CUDA device, checkpoint
-  step lists). **Start here to see how a metric is actually invoked**, then adapt paths.
+  `*_overlay.py` plotters that combine methods onto one figure. **Start here to see how a metric
+  is swept across all steps for a model size**, then adapt paths.
 
 The `LLMLandscape/` subtree is a vendored third-party engine — **do not modify it** (same rule
 as `evaluation/lm-evaluation-harness/` and the cloned method repos under `training/`).
@@ -57,8 +55,8 @@ All live in `scripts/single_checkpoint_scripts/`. Do **not** re-implement these 
 | 3 | `3_landscape_2d_pca_topk_components.py` | Loss landscape along top-K PCA directions of the trajectory | Landscape |
 | 3b | `3b_landscape_2d_pca_topk_components_variants.py` | Variants of the PCA-direction landscape | Landscape |
 | 4 | `4_expected_sharpness.py` | Expected sharpness (and variance) from a 1D landscape `.npy` | Landscape |
+| 4b | `4b_pca_aggregate_subsets.py` | Aggregate PCA landscapes into top-K subsets (5/10/100) + subset sharpness | Landscape |
 | 5 | `5_ranks.py` | Rank / spectral metrics (stable rank, effective rank) on weight matrices | Spectra |
-| 5b | `5b_ranks_init_to_final.py` | Singular spectrum of `ΔW = W_final − W_warmstart`, grouped by projection (ReLoRA-style) | Spectra |
 | 5 | `5_ranks_updates.py` | Update magnitude + update rank between consecutive checkpoints | Spectra |
 | 6 | `6_activations_comparison.py` | Activation L2 / cosine vs. the full-rank baseline | Activations |
 | 7 | `7_1d_interpolation.py` | Loss interpolation / barrier between consecutive checkpoints | Interpolation |
@@ -74,8 +72,8 @@ Overlay/trend plotters for each metric live under
 Install analysis dependencies and activate the environment:
 
 ```bash
-pip install -r loss-landscape/requirements.txt
 conda activate "=ll-training"      # note: env is literally named "=ll-training"
+pip install -r training/requirements.txt   # analysis deps are shared with training
 ```
 
 List the checkpoints available for a model size:
@@ -104,6 +102,7 @@ CUDA_VISIBLE_DEVICES=0 python \
 ```bash
 CUDA_VISIBLE_DEVICES=0 python \
   loss-landscape/scripts/single_checkpoint_scripts/5_ranks.py \
+  --model llama \
   --checkpoint CHECKPOINTS/models-60m/llama-60m/model_10000 \
   --svd_device cuda --seed 42 \
   --output_dir results/rank-metrics/models-60m/llama-60m/model_10000
@@ -122,8 +121,8 @@ CUDA_VISIBLE_DEVICES=0 python \
                      model_6000 model_7000 model_8000 model_9000 model_10000
 ```
 
-The `bash_scripts/*.sh` launchers contain the canonical, copy-pasteable commands (including the
-per-size checkpoint step lists) for every metric — read those before writing your own.
+The `multi_checkpoint_scripts/*_60m.py|*_130m.py|*_350m.py` runners encode the canonical
+per-size checkpoint step lists and flags for each metric — read those before writing your own.
 
 ### Checkpoint step conventions ("all checkpoints")
 

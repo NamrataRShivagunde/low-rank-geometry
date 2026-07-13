@@ -6,7 +6,7 @@ evaluation:
   num_fewshot: 0
   bootstrap_iters: 1000
   limit: null
-  seeds: [42]
+  seeds: [42, 43, 44, 45, 46]
   tokenizer: t5-base
 
   # All tasks for comprehensive evaluation
