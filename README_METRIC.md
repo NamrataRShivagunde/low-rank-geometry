@@ -52,7 +52,6 @@ All live in `scripts/single_checkpoint_scripts/`
 |---|--------|--------|-----------|
 | 1 | `1_landscape_2d_lowrank_number_of_dir.py` | Loss landscape along N random directions | Landscape |
 | 3 | `3_landscape_2d_pca_topk_components.py` | Loss landscape along top-K PCA directions of the trajectory | Landscape |
-| 3b | `3b_landscape_2d_pca_topk_components_variants.py` | Variants of the PCA-direction landscape | Landscape |
 | 4 | `4_expected_sharpness.py` | Expected sharpness (and variance) from a 1D landscape `.npy` | Landscape |
 | 5 | `5_ranks.py` | Rank / spectral metrics (stable rank, effective rank) on weight matrices | Spectra |
 | 5b | `5b_ranks_init_to_final.py` | Singular spectrum of `ΔW = W_final − W_warmstart`, grouped by projection (ReLoRA-style) | Spectra |
