@@ -51,6 +51,11 @@ cd ./training/SLTrain/sparse-lora
 pip install --no-build-isolation .
 ```
 
+> **Note on `transformers` version:** some methods vendor model code copied from a
+> specific `transformers` release (e.g. CoLA) and are sensitive to the installed version.
+> If a method fails to import or run due to a `transformers` API mismatch, pin
+> `transformers==4.52.4` (the version these experiments were run with).
+
 ## 2) Run training from one common entrypoint
 
 All the bash scripts are given in `training/training_bash_scripts`.
