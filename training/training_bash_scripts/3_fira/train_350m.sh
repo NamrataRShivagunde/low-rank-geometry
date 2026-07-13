@@ -1,0 +1,20 @@
+CUDA_VISIBLE_DEVICES=1 torchrun --standalone --nproc_per_node 1 training/torchrun_main_common.py \
+    --model_config training/configs/llama_configs/llama_350m.json \
+    --lr 0.01 \
+    --alpha 0.25 \
+    --rank 256 \
+    --update_proj_gap 200 \
+    --batch_size 64 \
+    --total_batch_size 512 \
+    --num_training_steps 60000 \
+    --warmup_steps 6000 \
+    --weight_decay 0 \
+    --dtype bfloat16 \
+    --eval_every 3000 \
+    --optimizer fira_adamw \
+    --save_every 3000 \
+    --method fira \
+    --run_name "fira_350m-ol" \
+    --save_dir checkpoints/fira-350m-ol \
+    --offline_mode \
+    --offline_data_path training/datasets-7b/c4/tokenized

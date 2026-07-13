@@ -1,0 +1,29 @@
+# Unified dependencies for training scripts in training/
+# Install from repo root with:
+# pip install --no-build-isolation -r training/requirements.txt
+
+torch
+transformers==4.52.4
+bitsandbytes
+tensorly
+tokenizers
+datasets
+peft
+wandb
+loguru
+nvitop
+matplotlib
+pybind11
+bitsandbytes
+scipy
+evaluate
+packaging
+ninja
+lion-pytorch
+scikit-learn
+tqdm
+loralib
+hyperopt
+torchinfo
+galore-torch
+fira

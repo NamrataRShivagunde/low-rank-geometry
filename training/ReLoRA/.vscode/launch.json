@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Llama-S Relora",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--model_config", "configs/llama_9m.json",
+                "--use_peft",
+                "--lora_r", "32",
+                "--relora", "100",
+                "--reset_optimizer_on_relora", "False",
+                "--device", "cuda:0",
+                "--lr", "0.0005",
+                "--batch_size", "240",
+                "--dtype", "bfloat16",
+                "--tags", "vscode_debugger",
+            ]
+        }
+    ]
+}
