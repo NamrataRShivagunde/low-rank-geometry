@@ -2,13 +2,6 @@
 
 This directory contains config-driven downstream evaluation for checkpoints using EleutherAI lm-evaluation-harness.
 
-cola
-
-bootstrao iter 0
-result: {'results': {'cola': {'alias': 'cola', 'mcc,none': 0.0, 'mcc_stderr,none': 'N/A'}},
-
-bootstrao iter 1000
-result: {'results': {'cola': {'alias': 'cola', 'mcc,none': 0.0, 'mcc_stderr,none': 0.0}
 
 ## What this supports
 
@@ -32,55 +25,13 @@ pip install -r evaluation/requirements.txt
 
 Default config: `evaluation/configs/default_eval.yaml`
 
-Tasks currently configured:
-- piqa
-- copa
-- mrpc
-- rte
-- mnli
-- arc_easy
-- blimp
-- sst2
-- qqp
-- qnli
-- boolq
-- multiRC
-- cola
-- wsc
-
-instruction following evals
-- ifeval
-- leaderboard_instruction_following
-
-Related alignment/helpfulness/safety behavior:
-- truthfulqa_mc1
-- truthfulqa_mc2
-- toxigen
-- gms8k
-
-General reasoning capability retention (not instruction-following itself):
-- bbh
-- gsm8k
-
-To assess the abilities of LMs on more typical
-downstream NLP tasks, we evaluate on a mixture
-of tasks from a subsample of (Super)GLUE, which
-consists of text classification tasks. We include
-a variety of task types, including paraphrase
-detection (MRPC, QQP), sentiment classification
-(SST-2), natural language inference (MNLI, QNLI,
-RTE), question answering (BoolQ, MultiRC), acceptability judgments (CoLA), and commonsense
-reasoning (WSC)
-e Mixed
-Signals Generalization Set (MSGS)
-(AoA) prediction task
+Tasks currently configured. to evaluate on the tasks in the paper.
 
 Default seeds:
 - 42, 43, 44, 45, 46
 
 Bootstrap uncertainty:
 - Set `evaluation.bootstrap_iters` in config (e.g. `1000`) to request bootstrap-based stderr/CI from lm-eval.
-- This is the recommended setup when pretraining seeds are not available.
 - You can combine this with `seeds: [42]` if you want one deterministic run plus bootstrap uncertainty.
 
 ## Dry run (no evaluation)

@@ -123,7 +123,6 @@ For every run, launcher writes into a unique directory under `CHECKPOINTS/`:
 
 ## Notes
 
-- `switchlora` requires `--dataset-path`.
 - Additional method-specific flags can be appended with repeated `--extra-arg`.
 - Use `--dry-run` to print the final command without launching training.
 - configs - in sltrain original configs, the models were trained on 10% extra steps
